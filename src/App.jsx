@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import "./App.css";
+import Again from "./Components/button";
+import Check from "./Components/Check";
+import Boss from "./Components/Boss";
+import { useState } from "react";
+let guess = 0
+let number = Math.trunc(Math.random() * 20)+1
+console.log(number)
+let text = '?'
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [Winner, UseWinner] = useState('?')
+  let btnch = () => {
+    if(number == guess){
+    UseWinner('You Win')
+  
+    }
+    else if(number < guess){
+      console.log('Big number');
+    }
+    else if(number > guess){
+      console.log('Small number')
+    }
+  }  
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <h1>Guess My Number!</h1>
+        <p class="between">(Between 1 and 20)</p>
+        <Again again={againBtn} />
+        <div class="number">{Winner}</div>
+      </header>
+      <main>
+        <section class="left">
+          <input
+            type="number"
+            class="guess"
+            onChange={(e) => (guess = e.target.value)}
+          />
+          <Check btnch={btnch} guess={guess} number={number}/>
+        </section>
+        <section class="right">
+          <p class="message">Start guessing...</p>
+          <p class="label-score">
+            💯 Score: <span class="score">20</span>
+          </p>
+          <p class="label-highscore">
+            🥇 Highscore: <span class="highscore">0</span>
+          </p>
+        </section>
+      </main>
+      <Boss />
     </>
-  )
+  );
 }
 
-export default App
+let againBtn = () => {
+  location.reload();
+};
+
+
+export default App;
